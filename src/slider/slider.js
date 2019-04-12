@@ -9,11 +9,30 @@ const Range = styled('div')(
         position: 'relative',
         width: '500px',
         height: '10px',
-        background: 'red',
-        borderRadius: '5px'
+        background: '#07d',
+        borderRadius: '5px',
+        userSelect: 'none'
     },
     width
 );
+
+const Min = styled('span')(
+    {
+        position: 'absolute',
+        right: '100%',
+        top: '-7px',
+        marginRight: '12px'
+    }
+)
+
+const Max = styled('span')(
+    {
+        position: 'absolute',
+        left: '100%',
+        top: '-7px',
+        marginLeft: '12px'
+    }
+)
 
 const Area = styled.div`
     position: absolute;
@@ -40,7 +59,18 @@ const Area = styled.div`
     ${height}
 `;
 
-export default class Slider extends Component{
+const CurrentValue = styled('span')(
+    {
+        position: 'absolute',
+        left: '-25px',
+        top: '10px',
+
+        width: '50px',
+        textAlign: 'center'
+    }
+)
+
+export class Slider extends Component{
     static defaultProps = {
         min: 0,
         max: 100
@@ -48,6 +78,8 @@ export default class Slider extends Component{
     static propTypes = {
         min: PropTypes.number,
         max: PropTypes.number,
+        sliderMove: PropTypes.func,
+        sliderMoveEnd: PropTypes.func
     }
     constructor(props) {
         super(props);
@@ -60,6 +92,14 @@ export default class Slider extends Component{
         }
     }
 
+    handleMove(value) {
+        if (this.props.sliderMove) this.props.sliderMove(value);
+    }
+
+    handleMoveEnd(value) {
+        if (this.props.sliderMoveEnd) this.props.sliderMoveEnd(value);
+    }
+
     componentDidMount = () => {
         window.addEventListener('mouseup', this.handleMouseUp)
     }
@@ -70,6 +110,18 @@ export default class Slider extends Component{
     }
 
     handleMouseMove = (mouseEvent) => {
+        const diff = this.getDiff(mouseEvent);
+        this.setState({
+            x: diff
+        });
+        this.handleMove(diff + this.props.min);
+    }
+
+    handleMouseUp = (mouseEvent) => {
+        window.removeEventListener('mousemove', this.handleMouseMove)
+    }
+
+    getDiff(mouseEvent) {
         let diff = this.state.x + (mouseEvent.pageX - this.preX);
         const length = this.props.max - this.props.min;
         if (diff < 0) {
@@ -77,25 +129,33 @@ export default class Slider extends Component{
         } if (diff > length) {
             diff = length;
         }
+
+        this.preX = mouseEvent.pageX;
+        return diff;
+    }
+
+    rangeClick = (e) => {
+        const diff = this.getDiff(e);
         this.setState({
             x: diff
         });
-        this.preX = mouseEvent.pageX;
-    }
-
-    handleMouseUp = () => {
-        window.removeEventListener('mousemove', this.handleMouseMove)
+        this.handleMoveEnd(diff + this.props.min);
     }
 
     render() {
         return (
             <Range width={this.props.max - this.props.min}
                    ref={this.rangeRef}
+                   onClick={e => this.rangeClick(e)}
             >
+                <Min>{this.props.min + ''}</Min>
+                <Max>{this.props.max + ''}</Max>
                 <Area ref={this.AreaRef}
                       onMouseDown={e => this.addMouseMoveListener(e)}
                       style={{left: this.state.x + 'px'}}
-                />
+                >
+                    <CurrentValue>{(this.props.min + this.state.x) || ''}</CurrentValue>
+                </Area>
             </Range>
         )
     }

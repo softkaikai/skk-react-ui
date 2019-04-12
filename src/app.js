@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { width } from 'styled-system';
 import PropTypes from 'prop-types';
 
-import Slider from './component/slider/slider';
+import { Slider } from './slider/slider';
 
 const Button = styled('button')({
     color: 'red',
@@ -21,11 +21,15 @@ const Button = styled('button')({
 
 
 export default class App extends Component{
+
+    change = (value) => {
+        console.log(value);
+    }
     render() {
         return <div>
             <Button width={100} name={123}>123123</Button>
-            <div style={{marginTop: '10px', marginLeft: '20px'}}>
-                <Slider max={400}></Slider>
+            <div style={{marginTop: '10px', marginLeft: '50px'}}>
+                <Slider sliderMoveEnd={this.change}></Slider>
             </div>
         </div>
     }
