@@ -6,6 +6,7 @@ import { expect } from 'chai';
 Enzyme.configure({ adapter: new Adapter() });
 
 import './component/slider.spec';
+import './component/snackBar.spec';
 
 
 describe('Save', () => {
