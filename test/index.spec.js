@@ -7,6 +7,7 @@ Enzyme.configure({ adapter: new Adapter() });
 
 import './component/slider.spec';
 import './component/snackBar.spec';
+import './component/countDown.spec';
 
 
 describe('Save', () => {

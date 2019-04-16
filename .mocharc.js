@@ -11,6 +11,6 @@ module.exports = {
     package: './package.json',
     reporter: 'spec',
     slow: 500,
-    timeout: 2000,
+    timeout: 2500,
     ui: 'bdd'
 };

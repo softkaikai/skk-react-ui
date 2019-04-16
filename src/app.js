@@ -5,20 +5,36 @@ import PropTypes from 'prop-types';
 
 import { Slider } from './slider/slider';
 import { SnackBar } from './snackBar/snackBar';
+import { withCountDown } from './countDown/countDown';
+
+class CountDownTest extends Component{
+    constructor(props) {
+        super(props);
+    }
+    render() {
+        return (
+            <div>
+                <div>
+                    {this.props.day} 天
+                    {this.props.hour} 时
+                    {this.props.minute} 分
+                    {this.props.second} 秒
+                </div>
+                <div>
+                    <button type="button" onClick={this.props.start}>start</button>
+                    <button type="button" onClick={this.props.reset}>reset</button>
+                    <button type="button" onClick={this.props.pause}>pause</button>
+                </div>
+            </div>
+        )
+    }
+}
+
+const CountDownWrapper = withCountDown(CountDownTest);
 
 const Button = styled('button')({
     color: 'red',
 }, width);
-
-/*Button.propTypes = {
-    width: PropTypes.symbol,
-    name: PropTypes.string
-};*/
-
-/*const Button = styled.button`
-    color: red;
-    ${width}
-`*/
 
 
 export default class App extends Component{
@@ -50,6 +66,9 @@ export default class App extends Component{
             <button onClick={this.addMsg}>sdfsadf</button>
             <div style={{marginTop: '10px', marginLeft: '50px'}}>
                 <SnackBar ref={this.msgRef} stayTime={5000}></SnackBar>
+            </div>
+            <div style={{marginTop: '10px', marginLeft: '50px'}}>
+                <CountDownWrapper totalTime={{day:1,hour:2}}></CountDownWrapper>
             </div>
         </div>
     }
