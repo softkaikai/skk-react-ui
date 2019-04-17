@@ -1,8 +1,9 @@
 {
   "name": "skk-react-ui",
-  "version": "1.0.0",
+  "version": "0.1.2",
   "description": "react ui component",
-  "main": "index.js",
+  "main": "lib/index.js",
+  "module": "lib/es/index.js",
   "scripts": {
     "test": "mocha --no-opts --require @babel/register --recursive ./test/index.spec.js",
     "build": "node tool/build.js",
