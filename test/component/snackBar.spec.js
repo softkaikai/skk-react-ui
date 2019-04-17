@@ -1,5 +1,5 @@
 import React from 'react';
-import { SnackBar } from '../../src/snackBar/snackBar';
+import SnackBar from '../../src/snackBar';
 import { mount } from 'enzyme';
 import { expect } from 'chai';
 import { spy } from 'sinon';

@@ -40,7 +40,7 @@ const Msg = styled.div.attrs(() => (
 `;
 
 
-export class SnackBar extends Component{
+export default class SnackBar extends Component{
     static defaultProps = {
         stayTime: 2000
     };

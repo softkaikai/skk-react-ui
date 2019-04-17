@@ -1,5 +1,5 @@
 import React from 'react';
-import { Slider }  from '../../src/slider/slider';
+import Slider from '../../src/slider';
 import { mount } from 'enzyme';
 import { expect } from 'chai';
 import { spy } from 'sinon';

@@ -5,7 +5,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
     entry: {
-        customer: './src/index.js',
+        customer: './src/demoIndex.js',
     },
     output: {
         filename: '[hash:8].bundle.js',

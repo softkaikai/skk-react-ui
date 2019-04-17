@@ -45,6 +45,7 @@ module.exports = {
                         ],
                         plugins: [
                             '@babel/plugin-proposal-object-rest-spread',
+                            '@babel/plugin-proposal-export-default-from',
                             // 减少包大小的
                             '@babel/plugin-transform-runtime',
                             '@babel/plugin-syntax-dynamic-import',

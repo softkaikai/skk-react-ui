@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { withCountDown } from '../../src/countDown/countDown';
+import withCountDown from '../../src/countDown';
 import { mount } from 'enzyme';
 import { spy } from 'sinon';
 import { expect } from 'chai';

@@ -1,5 +1,3 @@
-import ReactDom from 'react-dom';
-import React, { Component } from 'react';
-import App from './app';
-
-ReactDom.render(<App />, document.getElementById('react-app'));
+export SnackBar from "./snackBar";
+export withCountDown from './countDown';
+export Slider from './slider';

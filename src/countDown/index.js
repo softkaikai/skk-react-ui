@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-export function withCountDown (CountDown) {
+export default function withCountDown (CountDown) {
 
     const positiveInteger = function(props, propName, componentName) {
         if (!/^[+]{0,1}(\d+)$/.test(props[propName]) && props[propName] != null) {

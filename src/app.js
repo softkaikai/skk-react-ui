@@ -3,9 +3,9 @@ import styled from 'styled-components';
 import { width } from 'styled-system';
 import PropTypes from 'prop-types';
 
-import { Slider } from './slider/slider';
-import { SnackBar } from './snackBar/snackBar';
-import { withCountDown } from './countDown/countDown';
+import Slider from './slider';
+import SnackBar from './snackBar';
+import withCountDown from './countDown';
 
 class CountDownTest extends Component{
     constructor(props) {

@@ -70,7 +70,7 @@ const CurrentValue = styled('span')(
     }
 )
 
-export class Slider extends Component{
+export default class Slider extends Component{
     static defaultProps = {
         min: 0,
         max: 100
