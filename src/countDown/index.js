@@ -1,23 +1,29 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-export default function withCountDown (CountDown) {
-
+export default function withCountDown(CountDown) {
     const positiveInteger = function(props, propName, componentName) {
-        if (!/^[+]{0,1}(\d+)$/.test(props[propName]) && props[propName] != null) {
+        if (
+            !/^[+]{0,1}(\d+)$/.test(props[propName]) &&
+            props[propName] != null
+        ) {
             return new Error(
-                'Invalid prop `' + propName + '` supplied to' +
-                ' `' + componentName + '`. Validation failed.'
+                'Invalid prop `' +
+                    propName +
+                    '` supplied to' +
+                    ' `' +
+                    componentName +
+                    '`. Validation failed.'
             );
         }
-    }
+    };
 
-    return class CountDownWrapper extends Component{
+    return class CountDownWrapper extends Component {
         static defaultProps = {
             second: 0,
             minute: 0,
             hour: 0,
-            day: 0
+            day: 0,
         };
         static propTypes = {
             second: positiveInteger,
@@ -28,8 +34,8 @@ export default function withCountDown (CountDown) {
                 second: positiveInteger,
                 minute: positiveInteger,
                 hour: positiveInteger,
-                day: positiveInteger
-            })
+                day: positiveInteger,
+            }),
         };
 
         constructor(props) {
@@ -38,7 +44,7 @@ export default function withCountDown (CountDown) {
                 second: 0,
                 minute: 0,
                 hour: 0,
-                day: 0
+                day: 0,
             };
             this.timer = null;
             this.state = {
@@ -46,9 +52,8 @@ export default function withCountDown (CountDown) {
                 second: 0,
                 minute: 0,
                 hour: 0,
-                day: 0
-            }
-
+                day: 0,
+            };
         }
 
         componentDidMount() {
@@ -58,27 +63,30 @@ export default function withCountDown (CountDown) {
         _initCountDownTime() {
             if (this.props.totalTime) {
                 this.backupTime = Object.assign(this.props.totalTime);
-
             } else {
                 this.backupTime = {
                     second: this.props.second,
                     minute: this.props.minute,
                     hour: this.props.hour,
-                    day: this.props.day
-                }
+                    day: this.props.day,
+                };
             }
             this.setState(this.backupTime);
             this.setState({
-                totalSeconds: this._getTotalSecond()
-            })
+                totalSeconds: this._getTotalSecond(),
+            });
         }
 
         _getTotalSecond() {
             let totalSeconds = 0;
-            if (this.backupTime.second > 0) totalSeconds += this.backupTime.second;
-            if (this.backupTime.minute > 0) totalSeconds += this.backupTime.minute * 60;
-            if (this.backupTime.hour > 0) totalSeconds += this.backupTime.hour * 3600;
-            if (this.backupTime.day > 0) totalSeconds += this.backupTime.day * 3600 * 24;
+            if (this.backupTime.second > 0)
+                totalSeconds += this.backupTime.second;
+            if (this.backupTime.minute > 0)
+                totalSeconds += this.backupTime.minute * 60;
+            if (this.backupTime.hour > 0)
+                totalSeconds += this.backupTime.hour * 3600;
+            if (this.backupTime.day > 0)
+                totalSeconds += this.backupTime.day * 3600 * 24;
 
             return totalSeconds;
         }
@@ -103,9 +111,9 @@ export default function withCountDown (CountDown) {
                 second,
                 minute,
                 hour,
-                day
-            })
-        }
+                day,
+            });
+        };
 
         _clearTimer() {
             if (this.timer) clearInterval(this.timer);
@@ -116,41 +124,41 @@ export default function withCountDown (CountDown) {
             if (this.state.totalSeconds > 0 && !this.timer) {
                 this.timer = setInterval(this._minusOneSecond, 1000);
             }
-        }
+        };
 
         pause = () => {
             this._clearTimer();
-        }
+        };
 
-        reset = (time) => {
+        reset = time => {
             this._clearTimer();
             if (time && !time.stopPropagation) {
                 this.backupTime = {
                     second: time.second || 0,
                     minute: time.minute || 0,
                     hour: time.hour || 0,
-                    day: time.day || 0
-                }
+                    day: time.day || 0,
+                };
             }
             this.setState(this.backupTime);
             this.setState({
-                totalSeconds: this._getTotalSecond()
-            })
-        }
+                totalSeconds: this._getTotalSecond(),
+            });
+        };
 
         render() {
             return (
-                <CountDown second={this.state.second || 0}
-                           minute={this.state.minute || 0}
-                           hour={this.state.hour || 0}
-                           day={this.state.day || 0}
-                           totalSeconds={this.state.totalSeconds || 0}
-                           start={this.start}
-                           pause={this.pause}
-                           reset={this.reset}
-                ></CountDown>
-            )
+                <CountDown
+                    second={this.state.second || 0}
+                    minute={this.state.minute || 0}
+                    hour={this.state.hour || 0}
+                    day={this.state.day || 0}
+                    totalSeconds={this.state.totalSeconds || 0}
+                    start={this.start}
+                    pause={this.pause}
+                    reset={this.reset}
+                />
+            );
         }
-    }
+    };
 }
-

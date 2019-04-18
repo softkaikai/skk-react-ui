@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
-import { width, height } from "styled-system";
+import { width, height } from 'styled-system';
 
 import PropTypes from 'prop-types';
 
@@ -11,28 +11,24 @@ const Range = styled('div')(
         height: '10px',
         background: '#07d',
         borderRadius: '5px',
-        userSelect: 'none'
+        userSelect: 'none',
     },
     width
 );
 
-const Min = styled('span')(
-    {
-        position: 'absolute',
-        right: '100%',
-        top: '-7px',
-        marginRight: '12px'
-    }
-)
+const Min = styled('span')({
+    position: 'absolute',
+    right: '100%',
+    top: '-7px',
+    marginRight: '12px',
+});
 
-const Max = styled('span')(
-    {
-        position: 'absolute',
-        left: '100%',
-        top: '-7px',
-        marginLeft: '12px'
-    }
-)
+const Max = styled('span')({
+    position: 'absolute',
+    left: '100%',
+    top: '-7px',
+    marginLeft: '12px',
+});
 
 const Area = styled.div`
     position: absolute;
@@ -45,7 +41,7 @@ const Area = styled.div`
         position: absolute;
         left: 0;
         top: 0;
-        
+
         content: '';
         width: 20px;
         height: 20px;
@@ -54,33 +50,31 @@ const Area = styled.div`
         background: orange;
         border-radius: 100%;
         cursor: pointer;
-    };
+    }
     ${width}
     ${height}
 `;
 
-const CurrentValue = styled('span')(
-    {
-        position: 'absolute',
-        left: '-25px',
-        top: '10px',
+const CurrentValue = styled('span')({
+    position: 'absolute',
+    left: '-25px',
+    top: '10px',
 
-        width: '50px',
-        textAlign: 'center'
-    }
-)
+    width: '50px',
+    textAlign: 'center',
+});
 
-export default class Slider extends Component{
+export default class Slider extends Component {
     static defaultProps = {
         min: 0,
-        max: 100
-    }
+        max: 100,
+    };
     static propTypes = {
         min: PropTypes.number,
         max: PropTypes.number,
         sliderMove: PropTypes.func,
-        sliderMoveEnd: PropTypes.func
-    }
+        sliderMoveEnd: PropTypes.func,
+    };
     constructor(props) {
         super(props);
 
@@ -88,8 +82,8 @@ export default class Slider extends Component{
         this.rangeRef = React.createRef();
         this.preX = 0;
         this.state = {
-            x: 0
-        }
+            x: 0,
+        };
     }
 
     handleMove(value) {
@@ -101,32 +95,33 @@ export default class Slider extends Component{
     }
 
     componentDidMount = () => {
-        window.addEventListener('mouseup', this.handleMouseUp)
-    }
+        window.addEventListener('mouseup', this.handleMouseUp);
+    };
 
-    addMouseMoveListener = (clickEvent) => {
+    addMouseMoveListener = clickEvent => {
         this.preX = clickEvent.pageX;
-        window.addEventListener('mousemove', this.handleMouseMove)
-    }
+        window.addEventListener('mousemove', this.handleMouseMove);
+    };
 
-    handleMouseMove = (mouseEvent) => {
+    handleMouseMove = mouseEvent => {
         const diff = this.getDiff(mouseEvent);
         this.setState({
-            x: diff
+            x: diff,
         });
         this.handleMove(diff + this.props.min);
-    }
+    };
 
-    handleMouseUp = (mouseEvent) => {
-        window.removeEventListener('mousemove', this.handleMouseMove)
-    }
+    handleMouseUp = mouseEvent => {
+        window.removeEventListener('mousemove', this.handleMouseMove);
+    };
 
     getDiff(mouseEvent) {
         let diff = this.state.x + (mouseEvent.pageX - this.preX);
         const length = this.props.max - this.props.min;
         if (diff < 0) {
             diff = 0;
-        } if (diff > length) {
+        }
+        if (diff > length) {
             diff = length;
         }
 
@@ -134,29 +129,33 @@ export default class Slider extends Component{
         return diff;
     }
 
-    rangeClick = (e) => {
+    rangeClick = e => {
         const diff = this.getDiff(e);
         this.setState({
-            x: diff
+            x: diff,
         });
         this.handleMoveEnd(diff + this.props.min);
-    }
+    };
 
     render() {
         return (
-            <Range width={this.props.max - this.props.min}
-                   ref={this.rangeRef}
-                   onClick={e => this.rangeClick(e)}
+            <Range
+                width={this.props.max - this.props.min}
+                ref={this.rangeRef}
+                onClick={e => this.rangeClick(e)}
             >
                 <Min>{this.props.min + ''}</Min>
                 <Max>{this.props.max + ''}</Max>
-                <Area ref={this.AreaRef}
-                      onMouseDown={e => this.addMouseMoveListener(e)}
-                      style={{left: this.state.x + 'px'}}
+                <Area
+                    ref={this.AreaRef}
+                    onMouseDown={e => this.addMouseMoveListener(e)}
+                    style={{ left: this.state.x + 'px' }}
                 >
-                    <CurrentValue>{(this.props.min + this.state.x) || ''}</CurrentValue>
+                    <CurrentValue>
+                        {this.props.min + this.state.x || ''}
+                    </CurrentValue>
                 </Area>
             </Range>
-        )
+        );
     }
 }

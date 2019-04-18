@@ -15,6 +15,8 @@ module.exports = {
         "prettier/standard"
     ],
     "globals": {
+        "describe": true,
+        "it": true,
         "Atomics": "readonly",
         "SharedArrayBuffer": "readonly"
     },
