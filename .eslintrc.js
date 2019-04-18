@@ -8,7 +8,11 @@ module.exports = {
         "standard",
         "standard-react",
         "plugin:proposal-class/recommended",
-        "eslint:recommended"
+        "eslint:recommended",
+        "plugin:prettier/recommended",
+        "prettier/flowtype",
+        "prettier/react",
+        "prettier/standard"
     ],
     "globals": {
         "Atomics": "readonly",
@@ -21,9 +25,7 @@ module.exports = {
         "ecmaVersion": 2018,
         "sourceType": "module"
     },
-    "plugins": [
-        "react"
-    ],
+    "plugins": [],
     "rules": {
     }
 };
